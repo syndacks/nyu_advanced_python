@@ -1,53 +1,58 @@
 import sys
 
+CITIES = { 'Los Angeles': 'losangeles',
+ 'Chicago': 'chicago',
+ 'Honolulu': 'honolulu',
+ 'New York': 'newyork' }
 
 def main():
-    print sys.argv
-    if len(sys.argv) == 2:
-        if sys.argv[1] == 'New York':
-            city = 'new_york'
-        elif sys.argv[1] == 'Los Angeles':
-            city = 'los_angeles'
-        elif sys.argv[1] == 'Honolulu':
-            city = 'honolulu'
-        elif sys.argv[1] == 'Chicago':
-            city = 'chicago'
-        else:
-            print "I'm sorry but I don't recognize the city you entered."
+    city = validate_city()
+    means = calculate_means(city)
 
-        print "city chosen: ", city
-        calculate_means(city)
+
+def validate_city():
+    city = sys.argv[1]
+    if city in CITIES:
+        print "Input city: ", city
+        return city
+    else:
+        print "I'm sorry but I don't recognize the city you entered."
 
 
 def calculate_means(city):
     # city weather data file locations
-    if city == 'new_york':
-        weather_data = './weather_newyork.csv',
-    elif city == 'chicago':
-        weather_data = './weather_chicago.csv',
-    elif city == 'honolulu':
-        weather_data = './weather_honolulu.csv',
-    elif city == 'los_angeles':
-        weather_data = './weather_losangeles.csv',
+    FILENAME_TEMPLATE = 'weather_%s.csv' % CITIES[city]
 
-    fh = open(weather_data)
+    fh = open(FILENAME_TEMPLATE)
     # skip the first line (csv header)
     lines = fh.readlines()[1:]
 
+    # temp variables to be used while looipng
     sum_of_means = 0
     count_of_means = 0
+    means = []
+
+    # loop over each line
     for line in lines:
-        # items is a list
         items = line.split(',')
-        print items
         # the mean is the third item a string
         mean = items[2]
+        # add each mean to the array
+        means.append(mean)
         sum_of_means += int(mean)
         count_of_means += 1
 
-    print "sum_of_means: ", sum_of_means
-    print "count_of_means: ", count_of_means
-    print "avg means: ", sum_of_means / count_of_means
+    # close the file
+    fh.close()
+
+    # variable calculations
+    minimum_temp = min(means)
+    maximum_temp = max(means)
+    average_temp = sum_of_means / count_of_means
+
+    print "minimum_temp: ", minimum_temp
+    print "maximum_temp: ", maximum_temp
+    print "average_temp: ", average_temp
 
 
 main()
