@@ -5,9 +5,10 @@ CITIES = { 'Los Angeles': 'losangeles',
  'Honolulu': 'honolulu',
  'New York': 'newyork' }
 
+
 def main():
     city = _validate_city()
-    means = _calculate_means(city)
+    means = calculate_means(city)
 
 
 def _validate_city():
@@ -18,7 +19,7 @@ def _validate_city():
         print "I'm sorry but I don't recognize the city you entered."
 
 
-def _calculate_means(city):
+def calculate_means(city):
     # city weather data file locations
     FILENAME_TEMPLATE = 'weather_%s.csv' % CITIES[city]
 
@@ -40,11 +41,9 @@ def _calculate_means(city):
         means.append(mean)
         sum_of_means += int(mean)
         count_of_means += 1
-
     # close the file
     fh.close()
 
-    # variable calculations
     minimum_temp = min(means)
     maximum_temp = max(means)
     average_temp = sum_of_means / count_of_means
@@ -60,12 +59,6 @@ def _calculate_means(city):
 
 
 def _calculate_standard_deviation(data, mean_of_list):
-    # print "data: ", data
-    # print "mean_of_list: ", mean_of_list
-    #
-    # for item in data:
-    #     print item
-
     sum_of_differences_squared = 0
     count = 0
 
