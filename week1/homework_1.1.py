@@ -13,7 +13,6 @@ def main():
 def _validate_city():
     city = sys.argv[1]
     if city in CITIES:
-        print "Input city: ", city
         return city
     else:
         print "I'm sorry but I don't recognize the city you entered."
@@ -53,18 +52,19 @@ def _calculate_means(city):
     # find standard_deviation
     sd = _calculate_standard_deviation(means, average_temp)
 
+    print "Summary of 2016 weather data (in degrees F) for ", city
+    print "average_temp: ", average_temp
     print "minimum_temp: ", minimum_temp
     print "maximum_temp: ", maximum_temp
-    print "average_temp: ", average_temp
     print "standard_deviation: ", sd
 
 
 def _calculate_standard_deviation(data, mean_of_list):
-    print "data: ", data
-    print "mean_of_list: ", mean_of_list
-
-    for item in data:
-        print item
+    # print "data: ", data
+    # print "mean_of_list: ", mean_of_list
+    #
+    # for item in data:
+    #     print item
 
     sum_of_differences_squared = 0
     count = 0
