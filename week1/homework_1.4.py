@@ -17,7 +17,6 @@ $ pyt
 
 def find_primes_in_range(user_input):
     multiples = range(2,10)
-    print "multiples: ", multiples
     my_range = range(2, user_input + 1)
     for term in my_range:
         divisors_of_term = []
@@ -26,8 +25,12 @@ def find_primes_in_range(user_input):
             print str(term) + "/" + str(multiple) + " = "
             print "divisor: ", divisor
             divisors_of_term.append(divisor)
+
+        print "divisors_of_term: " + str(term), divisors_of_term
         for value in divisors_of_term:
-            if(value > 1):
-                print "value: " + str(value) + "---" + " is greater than 1"
+            if(value in multiples):
+                print "term " + str(term) + "is not prime."
+            else:
+                print "term " + str(term) + "is prime."
 
 find_primes_in_range(10)
