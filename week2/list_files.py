@@ -34,7 +34,7 @@ for item in os.listdir(directory_to_print):
 
     if os.path.isdir(item_path):
         print "{}: {}".format(item, 'directory')
-    elif os.path.isfile(item_path):
+    elif os.path.isf    ile(item_path):
         print "{}: {}".format(item, 'file')
     print ""
 
