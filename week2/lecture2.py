@@ -78,3 +78,21 @@ x = {
 sx = sorted(x, key=bylastval)
 print sx
 # to get around the global: use a lambda or use a tuple (?)
+
+def misc_stuff():
+    if os.path.isdir(item_path):
+        print "{}: {}".format(item, 'directory')
+    elif os.path.isfile(item_path):
+        print "{}: {}".format(item, 'file')
+    print ""
+
+    for root, dirs, files in os.walk(directory_to_print):
+        for dir in dirs:
+            print os.path.join(root, dir)
+        for file in files:
+                print os.path.join(root, file)
+
+    print "item_path:", item_path
+    print "item_base_name:", item_base_name
+    print "{}: modified {}".format(item_path, time.ctime(item_time))
+    print "{} size: {} bytes".format(item_path, item_size)

@@ -7,7 +7,8 @@ from pprint import pprint
 def main():
     args = setup_argparse()
     directory_to_print = ensure_args(args)
-
+    outerdict = build_outerdict(directory_to_print)
+    sort_outerdict(outerdict)
 
 def setup_argparse():
     parser = argparse.ArgumentParser(description='Show the files in a directory')
@@ -30,36 +31,34 @@ def ensure_args(args):
         print "directory_to_print: ", directory_to_print
         return directory_to_print
 
-def next_stuff():
+def build_outerdict(directory_to_print):
     outerdict = {}
     for item in os.listdir(directory_to_print):
-        print "----------------"
         item_path = os.path.join(directory_to_print, item)
         item_base_name = os.path.basename(item)
         item_size = os.path.getsize(item_path)
         item_time = os.path.getmtime(item_path)
 
-        if os.path.isdir(item_path):
-            print "{}: {}".format(item, 'directory')
-        elif os.path.isfile(item_path):
-            print "{}: {}".format(item, 'file')
-        print ""
-
-        # for root, dirs, files in os.walk(directory_to_print):
-        #     for dir in dirs:
-        #         print os.path.join(root, dir)
-        #     for file in files:
-        #         print os.path.join(root, file)
-
-        if item_path not in outerdict:
-            outerdict[item_path] = { 'name': item_base_name,
+        try:
+            outerdict[item_path] += {'name': item_base_name,
+                                     'size': item_size,
+                                     'mtime': item_time}
+        except KeyError:
+            outerdict[item_path] = {'name': item_base_name,
                                     'size': item_size,
-                                    'mtime': item_time }
-        # print "item_path:", item_path
-        # print "item_base_name:", item_base_name
-        # print "{}: modified {}".format(item_path, time.ctime(item_time))
-        # print "{} size: {} bytes".format(item_path, item_size)
+                                    'mtime': item_time}
+    pprint(outerdict)
+    return outerdict
+# 1 - what is one item to be sorted?
+# 2 - what value would have that item to be sorted?
+# 3 - can i write a function that takes 1 and returns 2?
+def _getlen(arg):
+    return len(arg)
+
+def sort_outerdict(outerdict):
+    sorted_dict = sorted(outerdict, key=_getlen)
+    pprint(sorted_dict)
 
 
-# pprint(outerdict)
+
 main()
