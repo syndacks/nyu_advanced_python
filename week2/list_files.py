@@ -4,11 +4,13 @@ import time
 
 from pprint import pprint
 
+
 def main():
     args = setup_argparse()
     directory_to_print = ensure_args(args)
     outerdict = build_outerdict(directory_to_print)
     sort_outerdict(outerdict)
+
 
 def setup_argparse():
     parser = argparse.ArgumentParser(description='Show the files in a directory')
@@ -23,6 +25,7 @@ def setup_argparse():
     args = parser.parse_args()
     return args
 
+
 def ensure_args(args):
     directory_to_print = args.dir
     if not os.path.exists(os.path.dirname(directory_to_print)):
@@ -30,6 +33,7 @@ def ensure_args(args):
     else:
         print "directory_to_print: ", directory_to_print
         return directory_to_print
+
 
 def build_outerdict(directory_to_print):
     outerdict = {}
@@ -47,13 +51,19 @@ def build_outerdict(directory_to_print):
             outerdict[item_path] = {'name': item_base_name,
                                     'size': item_size,
                                     'mtime': item_time}
-    pprint(outerdict)
     return outerdict
-# 1 - what is one item to be sorted?
-# 2 - what value would have that item to be sorted?
-# 3 - can i write a function that takes 1 and returns 2?
+
+def _get_args_data_for_sorting():
+    args = setup_argparse()
+    args.results
+
+
 def _getlen(arg):
+    # get the argparse args data from user
+
+    print "args from _getlen", args.results;
     return len(arg)
+
 
 def sort_outerdict(outerdict):
     sorted_dict = sorted(outerdict, key=_getlen)
