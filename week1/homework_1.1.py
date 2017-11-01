@@ -1,26 +1,24 @@
 import sys
 
-CITIES = {'Los Angeles': 'losangeles',
-            'Chicago': 'chicago',
-            'Honolulu': 'honolulu',
-            'New York': 'newyork'}
+CITIES = {'los angeles': 'losangeles',
+            'chicago': 'chicago',
+            'honolulu': 'honolulu',
+            'new york': 'newyork'}
 
 
 def main():
-    city = validate_city()
+    city = validate_city(sys.argv[1].lower())
     city_data = open_file(city)
     report = calculate_stats(city_data)
     print_report(report)
 
 
-def validate_city():
-    city = sys.argv[1]
-    try:
-        if city in CITIES:
+def validate_city(city):
+    if city in CITIES:
             return city
-    except KeyError:
-        print "I'm sorry but I don't recognize the city you entered. \
-        The options are: Los Angeles, New York, Chicago, or Honolulu."
+    elif city not in CITIES:
+        sys.exit("I'm sorry but I don't recognize the city you entered. \
+        The options are: Los Angeles, New York, Chicago, or Honolulu.")
 
 
 def open_file(city):
