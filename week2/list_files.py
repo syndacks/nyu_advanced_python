@@ -1,5 +1,6 @@
 import argparse
 import os
+import time
 
 from pprint import pprint
 
@@ -8,7 +9,8 @@ def main():
     args = setup_argparse()
     directory_to_print = ensure_args(args)
     outerdict = build_outerdict(directory_to_print)
-    sort_outerdict(outerdict, args)
+    final_list = sort_outerdict(outerdict, args)
+    print_final_list(final_list)
 
 
 def setup_argparse():
@@ -66,8 +68,23 @@ def sort_outerdict(outerdict, args):
         sorted_dict_keys.reverse()
 
     # matched the sorted values to the outter dict for final results
+    final_list = []
     for sorted_val in sorted_dict_keys[:args.results]:
-        print outerdict[sorted_val]
+        final_list.append(outerdict[sorted_val])
+
+    return final_list
 
 
-main()
+def _convert_mtime(mtime):
+    date_pattern = '%Y-%m-%d %H:%M:%S'
+    return time.strftime(date_pattern, time.localtime(mtime))
+
+
+def print_final_list(final_list):
+    for dictionary in final_list:
+        print '-{}: {} bytes. Last formatted: {}'.format(dictionary['name'],
+        dictionary['size'], _convert_mtime(dictionary['mtime']))
+
+
+if __name__ == '__main__':
+    main()
