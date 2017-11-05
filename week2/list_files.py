@@ -20,7 +20,7 @@ def setup_argparse():
     parser.add_argument('-results', type=int,
                         help='the number of results to return')
     parser.add_argument('-order', type=str,
-                        help='ascending/desending order results')
+                        help='ascending OR descending order results')
     args = parser.parse_args()
     return args
 
@@ -50,48 +50,24 @@ def build_outerdict(directory_to_print):
             outerdict[item_path] = {'name': item_base_name,
                                     'size': item_size,
                                     'mtime': item_time}
-
     return outerdict
 
 
-def _getlen(arg):
-    return len(arg)
-
-
 def sort_outerdict(outerdict, args):
-    by = args.by
-    order = args.order
-    results = args.results
-    # print by, results, order
-    # name, size, and key should be able to be used to sort by
-    for key in outerdict:
-        name = outerdict[key]['name']
-        print "name", name
-        size = outerdict[key]['size']
-        print "size", size
-        mtime = outerdict[key]['mtime']
-        print "mtime", mtime
+    def _sort(key):
+        # sort by args.by possibilities: 'name', 'size', or 'mtime'
+        sorted_by = outerdict[key][args.by]
+        return sorted_by
 
-    def _by_size(key):
-        size = outerdict[key]['size']
-        return size
+    sorted_dict_keys = sorted(outerdict, key=_sort)
 
-    sorted_by_size = sorted(outerdict, key=_by_size)
-    print sorted_by_size
+    # reverse the list of sorted_dict_keys if 'descending', no change for 'ascending'
+    if args.order == 'descending':
+        sorted_dict_keys.reverse()
 
-    # matched the sorted values to the outter dict
-    for sorted_val in sorted_by_size:
+    # matched the sorted values to the outter dict for final results
+    for sorted_val in sorted_dict_keys[:args.results]:
         print outerdict[sorted_val]
-
-
-
-    # sorted_dict = sorted(outerdict, key=_getlen)
-    # pprint(sorted_dict)
-
-# first look at the "by" and get the data for that parameter
-# then sort that data by asending order or descending order (large to small)
-# then return only the first x amount of results
-
 
 
 main()
