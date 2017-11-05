@@ -84,7 +84,3 @@ def print_final_list(final_list):
     for dictionary in final_list:
         print '-{}: {} bytes. Last formatted: {}'.format(dictionary['name'],
         dictionary['size'], _convert_mtime(dictionary['mtime']))
-
-
-if __name__ == '__main__':
-    main()

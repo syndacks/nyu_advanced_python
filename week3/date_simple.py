@@ -1,10 +1,10 @@
 import datetime as dt
 
 
-def get_date(*argv):
+def get_date(*date_obj):
     """get_date(): takes an optional string and returns a date object"""
-    if argv:
-        str_date = str(*argv)
+    if date_obj:
+        str_date = str(*date_obj)
         date_patterns = ['%Y-%m-%d', '%d-%b-%y', '%d/%m/%Y']
         for pattern in date_patterns:
             try:
@@ -15,10 +15,10 @@ def get_date(*argv):
         return dt.datetime.now()
 
 
-def add_day(date_obj, *argv):
+def add_day(date_obj, *days_to_delta):
     """add_day(): takes a date object and an optional integer and returns a date object"""
-    if argv:
-        time_delta = dt.timedelta(int(*argv))
+    if days_to_delta:
+        time_delta = dt.timedelta(int(*days_to_delta))
         new_date_obj = date_obj + time_delta
     else:
         time_delta = dt.timedelta(1)
@@ -26,10 +26,10 @@ def add_day(date_obj, *argv):
     return new_date_obj
 
 
-def add_week(date_obj, *argv):
+def add_week(date_obj, *weeks_to_delta):
     """add_week(): same as add_day() but adding days * 7"""
-    if argv:
-        time_delta = dt.timedelta(int(*argv))
+    if weeks_to_delta:
+        time_delta = dt.timedelta(int(*weeks_to_delta))
         week_delta = time_delta * 7
         new_date_obj = date_obj + week_delta
     else:
