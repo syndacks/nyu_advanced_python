@@ -30,12 +30,10 @@ class ZClass(dict):
         self.md = {}
     # when you try to set the value of an object, you use setattr
     def __setattr__(self, key, val):
-        print "calling setattr"
-        print "key from setattr", key, "val from setattr", val
+        self.md[key] = val
     # when you try to get the value of an object, you use getatt
     def __getattr__(self, key):
-        print "calling getattr"
-        print "key from getattr", key
+        return self.md[key]
 
 x = ZClass()
 # self is x, x is self
