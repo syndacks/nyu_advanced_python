@@ -2,8 +2,10 @@ class Config(object):
     base_dir = '/Users/dacks/sites/nyu_advanced_python/week4'
 
     def __init__(self):
-        self.configdict = {}
         self.store_data('quotes.csv')
+        self.configdict = {}
+        # we'll want to open the csv and create a key by enumerating and then storing the values as the three items in the CSV
+
 
     def store_data(self, custom_path):
         """sets the path of the file we are going to be retrieving data from"""
