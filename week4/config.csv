@@ -1,2 +1,4 @@
-data_query,db_name,db_username,db_password,email_to
-SELECT this that FROM mytable WHERE col = 5,data_db,dbuser,458abJk!9,joe@wilson.com
+k2,k1,foo,"k3
+"
+v2,v1,bar,"v3
+"
