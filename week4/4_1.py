@@ -2,7 +2,7 @@ import csv
 
 
 class Config(object):
-    base_dir = '/home/dacks/Code/nyu_advanced_python/week4/'
+    base_dir = '/Users/dacks/sites/nyu_advanced_python/week4'
 
     def __init__(self):
         self.configdict = {}
@@ -12,7 +12,7 @@ class Config(object):
         """sets the path of the file we are going to be retrieving data from"""
         self.dir = Config.base_dir + '/' + custom_path
         with open(self.dir) as csv_data:
-            lines = csv_data.readlines()
+            lines = csv_data.read().splitlines()
             csv_data.close()
         keys = lines[0].split(',')
         values = lines[1].split(',')
@@ -24,32 +24,37 @@ class Config(object):
         a KeyError exception"""
         try:
             value = self.configdict[keyname]
+            print "get value: ", value
+
             return value
         except KeyError:
             print "No value for given tryname: " + keyname
             exit()
 
-
-    def set(self, keyname, value):
+    def set(self, keyname, value, overwrite):
         """adds the key and value to the instance's dictionary, and then writes
         the entire key/value set back to the file"""
-        print self.configdict
-        self.configdict[keyname] = value
-        print self.configdict
+        if overwrite is True:
+            self.configdict[keyname] = value
 
-        with open(self.dir, 'wb') as csv_file:
-            writer = csv.writer(csv_file)
-            writer.writerow(self.configdict.keys())
-            writer.writerow(self.configdict.values())
+        elif overwrite is False:
+            try:
+                if self.configdict[keyname]:
+                    print "The key '" + keyname + "' already exists, and overwrite is set to False. Exiting"
+                    exit()
+            except KeyError:
+                self.configdict[keyname] = value
 
+        self._write_data(self.configdict)
 
-    def _write_data(self):
+    def _write_data(self, dict_to_write):
         """does the work of opening the file and writing each key and value in
         the dictionary to the file."""
-
-
-
+        with open(self.dir, 'wb') as csv_file:
+            writer = csv.writer(csv_file)
+            writer.writerow(dict_to_write.keys())
+            writer.writerow(dict_to_write.values())
 
 
 my_config = Config()
-my_config.set('foo', 'bar')
+my_config.set('foo', 'bar', True)
