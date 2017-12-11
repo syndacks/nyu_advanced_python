@@ -45,13 +45,11 @@ def build_outerdict(directory_to_print):
         item_time = os.path.getmtime(item_path)
 
         try:
-            outerdict[item_path] += {'name': item_base_name,
+            outerdict[item_path] = {'name': item_base_name,
                                      'size': item_size,
                                      'mtime': item_time}
         except KeyError:
-            outerdict[item_path] = {'name': item_base_name,
-                                    'size': item_size,
-                                    'mtime': item_time}
+            exit()
     return outerdict
 
 
@@ -84,3 +82,6 @@ def print_final_list(final_list):
     for dictionary in final_list:
         print '-{}: {} bytes. Last formatted: {}'.format(dictionary['name'],
         dictionary['size'], _convert_mtime(dictionary['mtime']))
+
+if __name__ == '__main__':
+    main()
