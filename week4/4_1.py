@@ -48,8 +48,8 @@ class Config(object):
         self._write_data(self.configdict)
 
     def _write_data(self, dict_to_write):
-        """does the work of opening the file and writing each key and value in
-        the dictionary to the file."""
+        """private method for opening the file and writing each key and value in
+        the dictionary to the file. Called by self.set"""
         with open(self.dir, 'wb') as csv_file:
             writer = csv.writer(csv_file)
             writer.writerow(dict_to_write.keys())
