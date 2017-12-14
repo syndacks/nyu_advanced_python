@@ -38,6 +38,11 @@ ticker_quote = get_price(form["ticker"].value)
 date_now = dt.datetime.now()
 
 print "Content-type:  text/html\n"
-print "<p>ticker: {}</p>".format(form["ticker"].value)
-print "<p>datetime: {}</p>".format(date_now)
-print "<p>ticker_quote: {}</p>".format(ticker_quote)
+print "<HEAD> \
+    <TITLE>Stock Ticker Request Form</TITLE> \
+    <link href='../static/css/bootstrap.min.css' rel='"'stylesheet'"'> \
+    <script src='"'../static/js/bootstrap.min.js'"'></script> \
+  </HEAD>"
+print "<p><strong>ticker</strong>: {}</p>".format(form["ticker"].value)
+print "<p><strong>ticker_quote</strong>: {}</p>".format(ticker_quote)
+print "<p><em>{}</em></p>".format(date_now)
