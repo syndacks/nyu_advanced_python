@@ -13,7 +13,6 @@ class Config(object):
         self.dir = custom_path
         with open(self.dir) as csv_data:
             lines = csv_data.read().splitlines()
-            csv_data.close()
         keys = lines[0].split(',')
         values = lines[1].split(',')
         self.configdict = dict(zip(keys, values))
@@ -34,16 +33,13 @@ class Config(object):
     def set(self, keyname, value, overwrite):
         """adds the key and value to the instance's dictionary, and then writes
         the entire key/value set back to the file"""
-        if overwrite is True:
+        if overwrite:
             self.configdict[keyname] = value
-
-        elif overwrite is False:
-            try:
-                if self.configdict[keyname]:
-                    print "The key '" + keyname + "' already exists, and overwrite is set to False. Exiting"
-                    exit()
-            except KeyError:
-                self.configdict[keyname] = value
+        else:
+            if keyname in self.configdict:
+                print "The key '" + keyname + "' already exists, and overwrite is set to False. Exiting"
+                exit()
+        self.configdict[keyname] = value
 
         self._write_data(self.configdict)
 
@@ -57,4 +53,4 @@ class Config(object):
 
 
 my_config = Config(Config.base_dir)
-my_config.set('foo', 'bar', True)
+my_config.set('foo', 'shiz', False)
