@@ -17,10 +17,10 @@ def get_date(date_string=None):
             continue
         return formatted_date
 
-def add_day(date_obj, *days_to_delta):
+def add_day(date_obj, days_to_delta=None):
     """add_day(): takes a date object and an optional integer and returns a date object"""
     if days_to_delta:
-        time_delta = dt.timedelta(int(*days_to_delta))
+        time_delta = dt.timedelta(int(days_to_delta))
         new_date_obj = date_obj + time_delta
     else:
         time_delta = dt.timedelta(1)
@@ -28,10 +28,10 @@ def add_day(date_obj, *days_to_delta):
     return new_date_obj
 
 
-def add_week(date_obj, *weeks_to_delta):
+def add_week(date_obj, weeks_to_delta=None):
     """add_week(): same as add_day() but adding days * 7"""
     if weeks_to_delta:
-        time_delta = dt.timedelta(int(*weeks_to_delta))
+        time_delta = dt.timedelta(int(weeks_to_delta))
         week_delta = time_delta * 7
         new_date_obj = date_obj + week_delta
     else:
@@ -55,29 +55,41 @@ def format_date(date_obj, *out_format):
     formated_string = date_obj.strftime(date_pattern)
     return formated_string
 
-# Tests
-dt1 = get_date('5/5/2016')
-assert type(dt1) is dt.date
-assert str(dt1) == '2016-05-05'
+# Tests for get_date
+gd1 = get_date('5/5/2016')
+assert type(gd1) is dt.date
+assert str(gd1) == '2016-05-05'
 
-dt2 = get_date('5-May-16')
-assert type(dt2) is dt.date
-assert str(dt2) == '2016-05-05'
+gd2 = get_date('5-May-16')
+assert type(gd2) is dt.date
+assert str(gd2) == '2016-05-05'
 
-dt3 = get_date()
-assert type(dt3) is dt.date
-# print "dt", dt1
-# print "dt", dt2
-# print "dt", dt3
+gd3 = get_date('2016-05-05')
+assert type(gd3) is dt.date
+assert str(gd3) == '2016-05-05'
 
-# dt2 = ds.add_day(dt, -3)
-# dt3 = ds.add_day(dt)
-# print "dt2", dt2
-# print "dt3", dt3
+# test to see that passing no date string returns Today
+gd4 = get_date()
+assert type(gd4) is dt.date
 
-# dt3_add_week = ds.add_week(dt)
-# dt3_add_week = ds.add_week(dt,2)
-# print "dt3_add_week", dt3_add_week
+
+#Tests for add_day
+print "original: ", gd4
+ad1 = add_day(gd4)
+print "add a day to original"
+print "ad1: ", ad1
+
+ad2 = add_day(gd4, days_to_delta=-3)
+print "subtract 3 from original"
+print "ad2", ad2
+
+
+# Test for add_week
+aw1 = add_week(gd4) # same as add_day but adds 7 days
+print "aw1: ", aw1
+aw2 = add_week(gd4, weeks_to_delta=2) # same as add_day but adds 14 days
+print "aw2: ", aw2
+
 
 # dt_format = ds.format_date(dt, 'MM/DD/YYYY')
 # dt_format = ds.format_date(dt, 'DD-Mon-YY')
