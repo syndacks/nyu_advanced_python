@@ -2,15 +2,15 @@ import csv
 
 
 class Config(object):
-    base_dir = '/Users/dacks/sites/nyu_advanced_python/week4'
+    base_dir = '/Users/dacks/sites/nyu_advanced_python/week4/config.csv'
 
-    def __init__(self):
+    def __init__(self, base_dir):
         self.configdict = {}
-        self.store_data('config.csv')
+        self.store_data(base_dir)
 
     def store_data(self, custom_path):
         """sets the path of the file we are going to be retrieving data from"""
-        self.dir = Config.base_dir + '/' + custom_path
+        self.dir = custom_path
         with open(self.dir) as csv_data:
             lines = csv_data.read().splitlines()
             csv_data.close()
@@ -56,5 +56,5 @@ class Config(object):
             writer.writerow(dict_to_write.values())
 
 
-my_config = Config()
+my_config = Config(Config.base_dir)
 my_config.set('foo', 'bar', True)
