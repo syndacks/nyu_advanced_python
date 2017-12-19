@@ -41,14 +41,14 @@ def add_week(date_obj, weeks_to_delta=None):
     return new_date_obj
 
 
-def format_date(date_obj, *out_format):
+def format_date(date_obj, out_format=None):
     """format_date(): takes a date object and an optional string and returns a string"""
     if out_format:
         format_dict = {
             'MM/DD/YYYY': '%m/%d/%Y',
             'DD-Mon-YY':'%d/%a/%y'
             }
-        date_pattern = format_dict[str(*out_format)]
+        date_pattern = format_dict[str(out_format)]
     else:
         date_pattern = '%d/%m/%Y'
 
@@ -91,7 +91,11 @@ aw2 = add_week(gd4, weeks_to_delta=2) # same as add_day but adds 14 days
 print "aw2: ", aw2
 
 
-# dt_format = ds.format_date(dt, 'MM/DD/YYYY')
-# dt_format = ds.format_date(dt, 'DD-Mon-YY')
-# dt_format = ds.format_date(dt)
-# print "dt_format", dt_format
+dt_format1 = format_date(gd4, out_format='MM/DD/YYYY')
+print "dt_format1: ", dt_format1
+
+dt_format2 = format_date(gd4, out_format='DD-Mon-YY')
+print "dt_format2: ", dt_format2
+
+dt_format3 = format_date(gd4)
+print "dt_format3: ", dt_format3
