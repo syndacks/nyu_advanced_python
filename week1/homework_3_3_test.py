@@ -4,10 +4,12 @@
     for a year's worth of data pulled from the Weather Underground
     2017-10-03  David Blaikie (dbb212@nyu.edu)      """
 
+import pytest
 import sys
 
-DEBUG = False                           # when development is complete,
+DEBUG = True                           # when development is complete,
                                         # set to False
+
 
 FILENAME_TEMPLATE = 'weather_{}.csv'
 
@@ -32,6 +34,13 @@ def validate_input(args):
         raise ValueError('city "{}" must be in cities: {}'.format(city, ', '.join(CITIES)))
 
     return CITIES[city]
+
+
+def _test_main():
+    # tests for validate_input
+    assert validate_input(['foo.py', 'Chicago']) == 'chicago'
+    assert validate_input(['foo.py', 'LosAngeles']) == ValueError
+
 
 
 def acquire_data(city):
@@ -101,6 +110,9 @@ def main():
     temp_std_dev = calculate_std_dev(data, temp_average)
 
     report_temps(city, temp_average, temp_max, temp_min, temp_std_dev)
+
+    _test_main()
+
 
 
 
